@@ -5,7 +5,8 @@ export const useAuthStore = defineStore('auth', () => {
 
     const login = async (credentials) => {
         try {
-            const { data } = await $fetch('/api/auth/login', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/auth/login`, {
                 method: 'POST',
                 body: credentials
             })
@@ -27,7 +28,8 @@ export const useAuthStore = defineStore('auth', () => {
 
     const register = async (userData) => {
         try {
-            const { data } = await $fetch('/api/auth/register', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/auth/register`, {
                 method: 'POST',
                 body: userData
             })
@@ -50,7 +52,8 @@ export const useAuthStore = defineStore('auth', () => {
     const logout = async () => {
         try {
             if (token.value) {
-                await $fetch('/api/auth/logout', {
+                const config = useRuntimeConfig()
+                await $fetch(`${config.public.apiBase}/auth/logout`, {
                     method: 'POST',
                     headers: {
                         Authorization: `Bearer ${token.value}`
@@ -74,7 +77,8 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             if (!token.value) return
 
-            const { data } = await $fetch('/api/auth/me', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/auth/me`, {
                 headers: {
                     Authorization: `Bearer ${token.value}`
                 }

@@ -7,11 +7,12 @@ export const useCarsStore = defineStore('cars', () => {
     const fetchCars = async (params = {}) => {
         loading.value = true
         try {
-            const { data } = await $fetch('/api/cars', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/cars`, {
                 query: params
             })
 
-            cars.value = data.cars || data
+            cars.value = data.items || data.cars || data
             return data
         } catch (error) {
             console.error('Erro ao buscar carros:', error)
@@ -24,9 +25,10 @@ export const useCarsStore = defineStore('cars', () => {
     const fetchCarById = async (id) => {
         loading.value = true
         try {
-            const { data } = await $fetch(`/api/cars/${id}`)
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/cars/${id}`)
 
-            currentCar.value = data.car || data
+            currentCar.value = data
             return data
         } catch (error) {
             console.error('Erro ao buscar carro:', error)
@@ -38,11 +40,12 @@ export const useCarsStore = defineStore('cars', () => {
 
     const fetchFeaturedCars = async () => {
         try {
-            const { data } = await $fetch('/api/cars', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/cars`, {
                 query: { featured: true, limit: 6 }
             })
 
-            featuredCars.value = data.cars || data
+            featuredCars.value = data.items || data.cars || data
             return data
         } catch (error) {
             console.error('Erro ao buscar carros em destaque:', error)
@@ -52,12 +55,13 @@ export const useCarsStore = defineStore('cars', () => {
 
     const createCar = async (carData) => {
         try {
-            const { data } = await $fetch('/api/cars', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/cars`, {
                 method: 'POST',
                 body: carData
             })
 
-            cars.value.unshift(data.car || data)
+            cars.value.unshift(data)
             return data
         } catch (error) {
             console.error('Erro ao criar carro:', error)
@@ -67,18 +71,19 @@ export const useCarsStore = defineStore('cars', () => {
 
     const updateCar = async (id, carData) => {
         try {
-            const { data } = await $fetch(`/api/cars/${id}`, {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/cars/${id}`, {
                 method: 'PUT',
                 body: carData
             })
 
             const index = cars.value.findIndex(car => car.id === id)
             if (index !== -1) {
-                cars.value[index] = { ...cars.value[index], ...data.car }
+                cars.value[index] = { ...cars.value[index], ...data }
             }
 
             if (currentCar.value && currentCar.value.id === id) {
-                currentCar.value = { ...currentCar.value, ...data.car }
+                currentCar.value = { ...currentCar.value, ...data }
             }
 
             return data
@@ -90,7 +95,8 @@ export const useCarsStore = defineStore('cars', () => {
 
     const deleteCar = async (id) => {
         try {
-            await $fetch(`/api/cars/${id}`, {
+            const config = useRuntimeConfig()
+            await $fetch(`${config.public.apiBase}/cars/${id}`, {
                 method: 'DELETE'
             })
 
@@ -114,7 +120,8 @@ export const useCarsStore = defineStore('cars', () => {
                 formData.append(`images`, image)
             })
 
-            const { data } = await $fetch(`/api/cars/${carId}/images`, {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/cars/${carId}/images`, {
                 method: 'POST',
                 body: formData
             })
@@ -128,11 +135,12 @@ export const useCarsStore = defineStore('cars', () => {
 
     const searchCars = async (query) => {
         try {
-            const { data } = await $fetch('/api/search/cars', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/cars`, {
                 query: { q: query }
             })
 
-            return data.cars || data
+            return data.items || data
         } catch (error) {
             console.error('Erro na busca de carros:', error)
             throw error

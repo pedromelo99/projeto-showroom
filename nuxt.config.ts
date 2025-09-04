@@ -26,11 +26,11 @@ export default defineNuxtConfig({
         }
     },
     axios: {
-        baseURL: process.env.API_BASE_URL || 'http://localhost:3001/api'
+        baseURL: process.env.API_BASE_URL || 'http://localhost:4000/api'
     },
     runtimeConfig: {
         public: {
-            apiBase: process.env.API_BASE_URL || 'http://localhost:3001/api'
+            apiBase: process.env.API_BASE_URL || 'http://localhost:4000/api'
         }
     },
     ssr: true,

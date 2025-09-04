@@ -6,7 +6,8 @@ export const useLeadsStore = defineStore('leads', () => {
     const fetchLeads = async (params = {}) => {
         loading.value = true
         try {
-            const { data } = await $fetch('/api/leads', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/leads`, {
                 query: params
             })
 
@@ -23,7 +24,8 @@ export const useLeadsStore = defineStore('leads', () => {
     const fetchLeadById = async (id) => {
         loading.value = true
         try {
-            const { data } = await $fetch(`/api/leads/${id}`)
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/leads/${id}`)
 
             currentLead.value = data.lead || data
             return data
@@ -37,7 +39,8 @@ export const useLeadsStore = defineStore('leads', () => {
 
     const createLead = async (leadData) => {
         try {
-            const { data } = await $fetch('/api/leads', {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/leads`, {
                 method: 'POST',
                 body: leadData
             })
@@ -52,7 +55,8 @@ export const useLeadsStore = defineStore('leads', () => {
 
     const updateLead = async (id, leadData) => {
         try {
-            const { data } = await $fetch(`/api/leads/${id}`, {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/leads/${id}`, {
                 method: 'PUT',
                 body: leadData
             })
@@ -75,7 +79,8 @@ export const useLeadsStore = defineStore('leads', () => {
 
     const deleteLead = async (id) => {
         try {
-            await $fetch(`/api/leads/${id}`, {
+            const config = useRuntimeConfig()
+            await $fetch(`${config.public.apiBase}/leads/${id}`, {
                 method: 'DELETE'
             })
 
@@ -94,7 +99,8 @@ export const useLeadsStore = defineStore('leads', () => {
 
     const updateLeadStatus = async (id, status) => {
         try {
-            const { data } = await $fetch(`/api/leads/${id}/status`, {
+            const config = useRuntimeConfig()
+            const { data } = await $fetch(`${config.public.apiBase}/leads/${id}/status`, {
                 method: 'PATCH',
                 body: { status }
             })
