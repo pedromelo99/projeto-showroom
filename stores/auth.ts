@@ -3,7 +3,7 @@ export const useAuthStore = defineStore('auth', () => {
     const token = ref(null)
     const isAuthenticated = computed(() => !!user.value && !!token.value)
 
-    const login = async (credentials) => {
+    const login = async (credentials: any) => {
         try {
             const config = useRuntimeConfig()
             const { data } = await $fetch(`${config.public.apiBase}/auth/login`, {
@@ -11,22 +11,21 @@ export const useAuthStore = defineStore('auth', () => {
                 body: credentials
             })
 
-            user.value = data.user
-            token.value = data.token
+            user.value = (data as any).user
+            token.value = (data as any).token
 
-            // Store in localStorage
             if (process.client) {
-                localStorage.setItem('auth_token', data.token)
-                localStorage.setItem('user', JSON.stringify(data.user))
+                localStorage.setItem('auth_token', (data as any).token)
+                localStorage.setItem('user', JSON.stringify((data as any).user))
             }
 
             return data
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(error.data?.message || 'Erro no login')
         }
     }
 
-    const register = async (userData) => {
+    const register = async (userData: any) => {
         try {
             const config = useRuntimeConfig()
             const { data } = await $fetch(`${config.public.apiBase}/auth/register`, {
@@ -34,17 +33,16 @@ export const useAuthStore = defineStore('auth', () => {
                 body: userData
             })
 
-            user.value = data.user
-            token.value = data.token
+            user.value = (data as any).user
+            token.value = (data as any).token
 
-            // Store in localStorage
             if (process.client) {
-                localStorage.setItem('auth_token', data.token)
-                localStorage.setItem('user', JSON.stringify(data.user))
+                localStorage.setItem('auth_token', (data as any).token)
+                localStorage.setItem('user', JSON.stringify((data as any).user))
             }
 
             return data
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(error.data?.message || 'Erro no cadastro')
         }
     }
@@ -84,8 +82,8 @@ export const useAuthStore = defineStore('auth', () => {
                 }
             })
 
-            user.value = data.user
-            return data.user
+            user.value = (data as any).user
+            return (data as any).user
         } catch (error) {
             console.error('Erro ao buscar usuário:', error)
             await logout()
@@ -115,3 +113,5 @@ export const useAuthStore = defineStore('auth', () => {
         initializeAuth
     }
 })
+
+

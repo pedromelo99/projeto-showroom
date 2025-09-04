@@ -1,4 +1,4 @@
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((nuxtApp) => {
     const config = useRuntimeConfig()
 
     const apiFetch = $fetch.create({
@@ -12,16 +12,12 @@ export default defineNuxtPlugin(() => {
                         Authorization: `Bearer ${token}`
                     }
                 }
-            } catch (_e) {
-                // ignore
-            }
+            } catch (_e) { }
         }
     })
 
-    // substitui o $fetch global por uma instância com baseURL e header automático
-    // atenção: apenas em cliente
-    // @ts-ignore
-    globalThis.$fetch = apiFetch
+    // disponibiliza client dedicado sem interferir no $fetch interno do Nuxt
+    nuxtApp.provide('apiFetch', apiFetch)
 })
 
 

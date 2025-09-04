@@ -1,32 +1,23 @@
 export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: [
-        '@nuxtjs/axios',
-        '@pinia/nuxt',
-        '@nuxtjs/pwa',
-        '@nuxtjs/vuetify'
+        '@pinia/nuxt'
     ],
-    css: ['~/assets/css/main.css'],
-    vuetify: {
-        theme: {
-            defaultTheme: 'light',
-            themes: {
-                light: {
-                    colors: {
-                        primary: '#1e3c72',
-                        secondary: '#2a5298',
-                        accent: '#ffd700',
-                        error: '#f44336',
-                        warning: '#ff9800',
-                        info: '#2196f3',
-                        success: '#4caf50'
-                    }
-                }
-            }
-        }
+    css: [
+        '~/assets/css/main.css',
+        'vuetify/styles'
+    ],
+    build: {
+        transpile: ['vuetify']
     },
-    axios: {
-        baseURL: process.env.API_BASE_URL || 'http://localhost:4000/api'
+    vite: {
+        ssr: {
+            noExternal: ['vuetify']
+        },
+        plugins: [
+            // @ts-ignore
+            import('vite-plugin-vuetify').then(mod => mod.default({ autoImport: true }))
+        ]
     },
     runtimeConfig: {
         public: {
