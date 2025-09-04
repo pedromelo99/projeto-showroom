@@ -1,0 +1,70 @@
+[user]
+	name = AutoShow Developer
+	email = dev@autoshow.com.br
+
+[core]
+	editor = code --wait
+	autocrlf = true
+	excludesfile = .gitignore
+
+[commit]
+	template = .gitmessage
+
+[alias]
+	# Aliases em português
+	status = status --porcelain
+	st = status --short
+	co = checkout
+	br = branch
+	ci = commit
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+	graph = log --graph --pretty=oneline --abbrev-commit
+	uncommit = reset --soft HEAD~1
+	amend = commit --amend --no-edit
+	undo = reset --hard HEAD~1
+	cleanup = "!git branch --merged | grep -v '\\*\\|master\\|main' | xargs -n 1 git branch -d"
+	
+	# Aliases para commits em português
+	feat = "!f() { git commit -m \"feat: $1\"; }; f"
+	fix = "!f() { git commit -m \"fix: $1\"; }; f"
+	docs = "!f() { git commit -m \"docs: $1\"; }; f"
+	style = "!f() { git commit -m \"style: $1\"; }; f"
+	refactor = "!f() { git commit -m \"refactor: $1\"; }; f"
+	test = "!f() { git commit -m \"test: $1\"; }; f"
+	chore = "!f() { git commit -m \"chore: $1\"; }; f"
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[push]
+	default = simple
+
+[merge]
+	tool = vscode
+
+[diff]
+	tool = vscode
+
+[color]
+	ui = auto
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan

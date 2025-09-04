@@ -1,0 +1,26 @@
+# <tipo>(<escopo>): <descrição>
+#
+# <corpo>
+#
+# <rodapé>
+
+# Tipos de commit:
+# feat: nova funcionalidade
+# fix: correção de bug
+# docs: mudanças na documentação
+# style: formatação, ponto e vírgula, etc (não afeta o código)
+# refactor: refatoração de código
+# test: adicionando ou corrigindo testes
+# chore: mudanças em ferramentas, configurações, etc
+
+# Escopo (opcional):
+# frontend, backend, database, auth, cars, admin, etc
+
+# Exemplos:
+# feat(frontend): adiciona filtros de busca na listagem de carros
+# fix(auth): corrige validação de senha no login
+# docs: atualiza README com instruções de instalação
+# style(frontend): ajusta espaçamento dos cards de carros
+# refactor(store): reorganiza stores do Pinia
+# test(cars): adiciona testes para componente CarCard
+# chore: atualiza dependências do projeto
